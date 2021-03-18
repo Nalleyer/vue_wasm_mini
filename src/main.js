@@ -3,6 +3,18 @@ import App from './App.vue'
 
 Vue.config.productionTip = false
 
-new Vue({
-  render: h => h(App),
-}).$mount('#app')
+async function init() {
+  import("@/assets/pkg/rust_src_bg").then((wasm) => {
+    console.log("vue loaded", wasm);
+    Vue.prototype.$wasm = wasm
+
+    new Vue({
+      render: h => h(App),
+      created: function () {
+      }
+    }).$mount('#app')
+  });
+}
+
+
+init();
